@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+
+# Make sure only root can run our script
+if [ "$(id -u)" != "0" ]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
+echo "We will install the USB auto shizzle moving parts..."
+install -v -C --owner=root --mode=u+rw 90-biotropyd-usb.rules /etc/udev/rules.d/90-biotropyd-usb.rules
+install -v -C --owner=root --mode=u+rwx ctlbiotropyd /usr/local/bin/ctlbiotropyd
+sudo udevadm control --reload-rules
+

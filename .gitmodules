@@ -1,0 +1,3 @@
+[submodule "biotropyd"]
+	path = biotropyd
+	url = git@github.com:dropmeaword/biotropyd.git
