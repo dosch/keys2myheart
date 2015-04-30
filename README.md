@@ -1,6 +1,6 @@
 # Keys to My Heart
 
-The Key to my Heart is an interactive ritual where a human can obtain a new and verifiable digital identity in the form of a cryptographic key. A cryptographic key is a number generated in such a way that it can uniquely identify a human. To generate this digital identity we will use something that is unique to a human: the beating of the heart.
+The Key to my Heart is an interactive ritual where a human can obtain a new and verifiable digital identity in the form of a cryptographic key. A cryptographic key is a number generated in such a way that it can uniquely identify a human. To generate this digital identity we will use something that is unique to you: the beating of your heart.
 
 Good keys are generated from random numbers. Computers are very bad at that so they need external sources of entropy. The heartbeat is a great, and very personal, source of random numbers. So we will help poor little computer by feeding human randomness into it.
 
@@ -8,7 +8,7 @@ Digital identities are very tricky, as the saying goes, on the internet nobody k
 
 The public part of each key will be uploaded to a keyserver together with a recording of the heart. The private part of the key is given to the human to take home. The human can use this key to send encrypted email and also prove he or she is indeed human in digital contact.
 
-    Goldfrapp - Human Lyrics
+    Goldfrapp - Human
 
     They fall from your mouth
     Propelled by your belly and your tongue
@@ -25,6 +25,8 @@ The public part of each key will be uploaded to a keyserver together with a reco
 
     Are you human or a dud?
     Are you human or d'you make it up?
+
+    (continues...)
 
 ### How it works.
 Two lovely assistants dressed in white coats will hold a doppler to your heart. The sound it registers, the unique beat that is the source of life and everything you do all day, is fed into a computer and broadcasted through speakers. The computer uses the beat of your heart to create your unique key. The speakers are just there for extra dramatic effect.
