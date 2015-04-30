@@ -4,5 +4,5 @@ This is meant for linux only. These different scripts implement a way of hooking
 
 To install just:
 
-    `$ sudo ./install`
+    $ sudo ./install
 
