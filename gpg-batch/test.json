@@ -1,0 +1,14 @@
+{
+	"type":"RSA", 
+	"length":"4096", 
+	"subtype":"ELG-E", 
+	"sublength":"4096", 
+	"username":"kvdfrog", 
+	"name":"Kermit van der Frog", 
+	"comment":"(this person doesn't exist)", 
+	"email":"kermit.vd.frog@invalid.tld", 
+	"expire":"0", 
+	"passphrase":"somepassphrase", 
+	"pubring":"foo.pub", 
+	"secring":"foo.sec"
+}

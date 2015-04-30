@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+SECONDS=`expr 2 \* 60`
+
+if [ $# -lt 1 ]
+then
+        echo "Usage : $0 experiment name (e.g. plain, heartrate, help)", $SECONDS
+        exit
+fi
+
+case $1 in
+	plain)
+		# start entropy feed
+		python logentro.py &
+		# wait for a bit
+		echo "Waiting for $SECONDS before generating a key..."
+		sleep $SECONDS
+		# generate pgp key
+		python batchgpg.py < test.json
+		;;
+	heartrate)
+		# start entropy feed
+		python entro.py -s /dev/ttyUSB0 -d 127.0.0.1 -t 2222 --alldata &
+		# wait for a bit
+		echo "Waiting for $SECONDS before generating a key..."
+		sleep $SECONDS
+		# generate pgp key
+		python batchgpg.py < test.json
+		;;
+	help)
+		echo "HELP param recognised"
+		;;
+esac
