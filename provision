@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# make sure this script is run by root only
+if [ "$(id -u)" != "0" ]; then
+	fatal "This script must be run as root"
+	exit 1
+fi
+
+PACKAGES="coreutils gnupg2"
+
+for dep in $PACKAGES
+do
+	echo "\033[47;34m>>> installing package $dep\033[0m"
+	apt-get install -q -y $dep || fatal "unable to install $dep"
+done
