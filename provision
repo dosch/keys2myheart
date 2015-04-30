@@ -6,7 +6,7 @@ if [ "$(id -u)" != "0" ]; then
 	exit 1
 fi
 
-PACKAGES="coreutils gnupg2"
+PACKAGES="coreutils gnupg2 python-gnupg"
 
 for dep in $PACKAGES
 do
