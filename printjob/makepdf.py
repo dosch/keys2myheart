@@ -1,5 +1,8 @@
 from fpdf import FPDF
 
+
+# for docu see: https://code.google.com/p/pyfpdf/wiki/FPDF
+
 class PDF(FPDF):
         def header(this):
                 # Logo
