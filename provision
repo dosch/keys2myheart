@@ -15,7 +15,7 @@ do
 done
 
 
-PYLIBS="gnupg qrcode docopt"
+PYLIBS="gnupg qrcode docopt pexpect"
 # install python dependency
 for dep in $PYLIBS
 do

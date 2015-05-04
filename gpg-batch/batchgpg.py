@@ -1,12 +1,40 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+##
+## (cc) 2015 Luis Rodil-Fernandez <root@derfunke.net>
+## Generate labels from revocation certificates and manage printing queue
+##
+##
+CLII = """
+Tool for gnupg key management used in the key2myheart installation.
+
+Usage:
+  keypipe generate --name=<name> --email=<email>
+  keypipe revocation [--keyid=<keyid>]
+  keypipe shred
+  keypipe -h | --help
+
+Commands:
+  generate              Generate keypair for given name and email address.
+  revocation            Get revocation certificate for requested key id.
+  shred                 Digitally shred all generated keys and certificates.
+
+Options:
+  -h --help             Show this screen.
+  --name=<name>         Name of key's owner.
+  --email=<email>       Email address of key's owner.
+  --keyid=<keyid>       Id of key to generate certificate for.
+"""
 import sys, os
 import json
 import re
 import pipes
 from subprocess import Popen, PIPE
 import shutil, time
+from docopt import docopt
 import gnupg
+import subprocess
+
 
 KEYSPEC = """
 %echo Generating an OpenPGP key
@@ -22,7 +50,9 @@ Expire-Date: {expire}
 %echo Key generated. Done.
 """
 
-gpg = gnupg.GPG(homedir="./temp.gnupg")
+KEYRING_DIR="./temp.gnupg"
+
+gpg = gnupg.GPG(homedir=KEYRING_DIR)
 
 def default_spec():
 	return KEYSPEC.format(type='RSA', 
@@ -83,7 +113,9 @@ def generate_keys(cfgarr):
 	begin = time.time()
 	retkey = gpg.gen_key(spec)
 	end = time.time()
-	print "generated key with fp: ", retkey.fingerprint, "in", (end-begin), "seconds"
+	from pprint import pprint
+	pprint(retkey)
+	print "generated key with fp: ", retkey.fingerprint, "and keyid", "in", (end-begin), "seconds"
 
 	pubkey = gpg.export_keys(retkey.fingerprint)
 	seckey = gpg.export_keys(retkey.fingerprint, secret=True)
@@ -99,6 +131,51 @@ def generate_keys(cfgarr):
 def get_generated_key(params):
 	""" get key id and fingerprint of generated key """
 	os.popen("gpg --primary-keyring {0} --list-keys --no-default-keyring --homedir .".format(params["pubring"]) )
+
+def get_revocation_certificate(keyid):
+	print "Using keyring", KEYRING_DIR
+	cmd = "/usr/bin/gpg --homedir {0} --gen-revoke {1}".format(KEYRING_DIR, keyid)
+	print "Command: ", cmd
+
+	p = Popen(cmd.split(), shell=True, stdout=PIPE, stderr=PIPE, stdin=PIPE)
+	for l in p.stdout.readlines():
+		if "certificate for this key? (y/N)" in l:
+			p.stdin.write("y\n")
+			
+		# if "Your decision? " in l:
+		# 	p.stdin.write("0\n")
+
+		# if ">" in l:
+		# 	p.stdin.write("\n")
+
+		# if "Is this ok? " in l:
+		# 	p.stdin.write("y\n")
+
+		print l
+
+	# import pexpect
+	# proc = pexpect.spawn( cmd )
+	# proc.expect('Create a revocation certificate for this key\? \(y/N\)')
+	# proc.sendline('y')
+	# proc.expect('Your decision? ')
+	# proc.sendline('0')
+	# proc.expect('>')
+	# proc.sendline("\n")
+	# proc.expect('Is this ok? ')
+	# proc.sendline('y')
+	# # proc.expect(pexpect.EOF)
+	# print proc.before
+	# print "----"*10
+	# print proc.after
+
+## Create a revocation certificate for this key? (y/N)
+## y\n
+## Your decision?
+## 0\n
+## Enter an optional description; end it with an empty line:
+## \n
+## Is this okay? (y/N)
+## y\n
 
 def main():
 	cfg = read_stdin()
