@@ -34,7 +34,7 @@ import shutil, time
 from docopt import docopt
 import gnupg
 import subprocess
-
+import pexpect
 
 KEYSPEC = """
 %echo Generating an OpenPGP key
@@ -134,48 +134,32 @@ def get_generated_key(params):
 
 def get_revocation_certificate(keyid):
 	print "Using keyring", KEYRING_DIR
-	cmd = "/usr/bin/gpg --homedir {0} --gen-revoke {1}".format(KEYRING_DIR, keyid)
+	cmd = "gpg --homedir {0} --gen-revoke {1}".format(KEYRING_DIR, keyid)
 	print "Command: ", cmd
+	px = pexpect.spawn(cmd, timeout=5)
 
-	p = Popen(cmd.split(), shell=True, stdout=PIPE, stderr=PIPE, stdin=PIPE)
-	for l in p.stdout.readlines():
-		if "certificate for this key? (y/N)" in l:
-			p.stdin.write("y\n")
-			
-		# if "Your decision? " in l:
-		# 	p.stdin.write("0\n")
+	px.expect("(y/N)")
+	px.sendline("y")
+	px.expect("Your decision?")
+	px.sendline('0')
+	px.expect("> ")
+	px.sendline("\n")
+	px.sendline("\n")
+	px.expect("Is this okay?")
+	px.sendline("y")
 
-		# if ">" in l:
-		# 	p.stdin.write("\n")
+	px.expect(pexpect.EOF)
 
-		# if "Is this ok? " in l:
-		# 	p.stdin.write("y\n")
+	# print "before: ", px.before
+	# print "buffer: ", px.buffer
+	# print "after: ", px.after
 
-		print l
+	bidx = px.before.index('-----BEGIN PGP PUBLIC KEY BLOCK-----')
+	eidx = px.before.index('-----END PGP PUBLIC KEY BLOCK-----')
+	eidx += len('-----END PGP PUBLIC KEY BLOCK-----')
+	print "## certificate"
+	print px.before[bidx:eidx]
 
-	# import pexpect
-	# proc = pexpect.spawn( cmd )
-	# proc.expect('Create a revocation certificate for this key\? \(y/N\)')
-	# proc.sendline('y')
-	# proc.expect('Your decision? ')
-	# proc.sendline('0')
-	# proc.expect('>')
-	# proc.sendline("\n")
-	# proc.expect('Is this ok? ')
-	# proc.sendline('y')
-	# # proc.expect(pexpect.EOF)
-	# print proc.before
-	# print "----"*10
-	# print proc.after
-
-## Create a revocation certificate for this key? (y/N)
-## y\n
-## Your decision?
-## 0\n
-## Enter an optional description; end it with an empty line:
-## \n
-## Is this okay? (y/N)
-## y\n
 
 def main():
 	cfg = read_stdin()
