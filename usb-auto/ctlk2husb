@@ -10,17 +10,16 @@
 ## so we have to rebuild the library cache 
 ## with: sudo ldconfig -v
 ##
-env > /tmp/env.out
 
-echo $ACTION > /tmp/action.out
-echo $DEVNAME >> /tmp/action.out
+# env > /tmp/env.out
+
+# echo $ACTION > /tmp/action.out
+# echo $DEVNAME >> /tmp/action.out
 
 if [ $ACTION = "add" ] 
 then
-    echo $DEVNAME > /tmp/backuptousbdrive.out
+    # echo $DEVNAME > /tmp/backuptousbdrive.out
 	# send osc message to notify of usb drive presence
 	oscsend osc.udp://localhost:12345 /k2h/thumbdrive s add
-else
-    echo "unknown"  > /tmp/backuptousbdrive.out
 fi
 
