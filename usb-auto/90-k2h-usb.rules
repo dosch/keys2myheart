@@ -1,1 +1,1 @@
-ACTION=="add", KERNEL=="sdb", SUBSYSTEMS=="usb", DRIVERS=="usb-storage", RUN+="/usr/local/bin/ctlk2husb"
+ACTION=="add", KERNEL=="sdb", SUBSYSTEMS=="usb", DRIVERS=="usb-storage", MODE="0777", SYMLINK="k2myheart", RUN+="/usr/local/bin/ctlk2husb"

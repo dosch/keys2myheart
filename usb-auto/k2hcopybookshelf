@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+if [ -f "/usr/local/share/key2myheart/k2h-bookshelf.tar.gz" ] 
+then
+	tar xf /usr/local/share/key2myheart/k2h-bookshelf.tar.gz -C /media/$USER/USB\ DISK
+fi
