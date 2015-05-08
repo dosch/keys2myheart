@@ -39,7 +39,8 @@ LABEL = {
     # DYMO label: landscape, 88x41mm
     'orientation' : 'L',   # P=portrait, L=landscape
     'units' : 'mm',
-    'dimensions' : (41, 88)
+    #'dimensions' : (41, 88)
+    'dimensions' : (54, 101)
 }
 
 # for docu see: https://code.google.com/p/pyfpdf/wiki/FPDF
@@ -63,9 +64,9 @@ def pdf_generate(name, email, url="www.key2myheart.nl", pdfname="label.pdf"):
     #pdf.set_xy(40, 4)
 
     # place QR code
-    pdf.image('qr_code.png', 0, 0, 38)
+    pdf.image('qr_code.png', 4, 1, 52)
 
-    x_pos = 76
+    x_pos = 88
     # arial bold, 12
     pdf.set_font('Arial', 'B', 9.6)
     # w, h, txt, border, line, align
