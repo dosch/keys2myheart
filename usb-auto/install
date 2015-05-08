@@ -8,7 +8,7 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 echo "We will install the USB auto shizzle moving parts..."
-install -v -C --owner=root --mode=u+rw 90-biotropyd-usb.rules /etc/udev/rules.d/90-biotropyd-usb.rules
-install -v -C --owner=root --mode=u+rwx ctlbiotropyd /usr/local/bin/ctlbiotropyd
+install -v -C --owner=root --mode=u+rw 90-k2h-usb.rules /etc/udev/rules.d/90-k2h-usb.rules
+install -v -C --owner=root --mode=u+rwx ctlk2husb /usr/local/bin/ctlk2husb
 sudo udevadm control --reload-rules
 

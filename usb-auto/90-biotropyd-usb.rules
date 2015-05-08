@@ -1,1 +1,0 @@
-ACTION=="add", KERNEL=="sdb", SUBSYSTEMS=="usb", DRIVERS=="usb-storage", RUN+="/usr/local/bin/ctlbiotropyd"
