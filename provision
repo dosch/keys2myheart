@@ -23,6 +23,11 @@ do
 	pip install $dep || fatal "unable to install $dep"
 done
 
+# config system to override default actions
+# #########################################
+# disable auto opening nautilus
+gsettings set org.gnome.desktop.media-handling automount-open false
+
 echo "TODO LIST:"
 echo "1. The DYMO driver is now installed, remember to add the DYMO printer to CUPS as default."
 echo "2. Install liblo, you can download it from from http://liblo.sourceforge.net/"
