@@ -53,7 +53,7 @@ Expire-Date: {expire}
 %echo Key generated. Done.
 """
 
-KEYRING_DIR="/usr/local/share/key2myheart/k2h.gnupg"
+KEYRING_DIR="/tmp/k2h.gnupg"
 DB = "/usr/local/share/key2myheart/keystore.db"
 
 gpg = gnupg.GPG(homedir=KEYRING_DIR)
