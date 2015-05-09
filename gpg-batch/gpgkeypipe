@@ -9,10 +9,11 @@ CLII = """
 Tool for gnupg key management used in the key2myheart installation.
 
 Usage:
-  keypipe generate --name=<name> --email=<email>
-  keypipe revocation [--keyid=<keyid>]
-  keypipe shred
-  keypipe -h | --help
+  gpgkeypipe generate --name=<name> --email=<email>
+  gpgkeypipe revocation [--keyid=<keyid>]
+  gpgkeypipe k2myheart --name=<name> --email=<email> --out=<path>
+  gpgkeypipe shred
+  gpgkeypipe -h | --help
 
 Commands:
   generate              Generate keypair for given name and email address.
@@ -24,6 +25,7 @@ Options:
   --name=<name>         Name of key's owner.
   --email=<email>       Email address of key's owner.
   --keyid=<keyid>       Id of key to generate certificate for.
+  --out=<path> 		    Path to store a k2h identity.
 """
 import sys, os
 import json
@@ -35,6 +37,7 @@ from docopt import docopt
 import gnupg
 import subprocess
 import pexpect
+import sqlite3
 
 KEYSPEC = """
 %echo Generating an OpenPGP key
@@ -50,7 +53,8 @@ Expire-Date: {expire}
 %echo Key generated. Done.
 """
 
-KEYRING_DIR="./temp.gnupg"
+KEYRING_DIR="/usr/local/share/key2myheart/k2h.gnupg"
+DB = "/usr/local/share/key2myheart/keystore.db"
 
 gpg = gnupg.GPG(homedir=KEYRING_DIR)
 
@@ -119,10 +123,18 @@ def generate_keys(cfgarr):
 
 	pubkey = gpg.export_keys(retkey.fingerprint)
 	seckey = gpg.export_keys(retkey.fingerprint, secret=True)
+	keyid  = "0x{0}".format( retkey.fingerprint[-8:] )
+	print "keyid: ", keyid
+
+	# insert public key details in keystore
+	with sqlite3.connect(DB) as dbcon:
+		cur = dbcon.cursor()
+		cur.execute("INSERT INTO keystore(keyid, fingerprint, name, email, pubkey) VALUES(?, ?, ?, ?, ?)", (keyid, retkey.fingerprint, cfgarr["name_real"], cfgarr["name_email"], pubkey))
+		dbcon.commit()
 
 	print "exported pubkey: ", pubkey
 
-	return retkey
+	return (keyid, retkey.fingerprint, pubkey, seckey, cfgarr["name_real"], cfgarr["name_email"])
 	# p = os.popen("gpg --batch --gen-key ", 'w')
 	# p.write(spec)
 	# #print spec
@@ -157,9 +169,58 @@ def get_revocation_certificate(keyid):
 	bidx = px.before.index('-----BEGIN PGP PUBLIC KEY BLOCK-----')
 	eidx = px.before.index('-----END PGP PUBLIC KEY BLOCK-----')
 	eidx += len('-----END PGP PUBLIC KEY BLOCK-----')
+	cert = px.before[bidx:eidx]
 	print "## certificate"
-	print px.before[bidx:eidx]
+	print cert
+	return cert
 
+
+def get_last_keyid():
+	with sqlite3.connect(DB) as dbcon:
+		cur = dbcon.cursor()
+		cur.execute("SELECT keyid, created FROM keystore ORDER BY created DESC LIMIT 1")
+		data = cur.fetchone()
+		return data[0]
+
+def cmd_k2myheart_with_export(name, email, outpath):
+	params = {
+			"type":"RSA", 
+			"length":"4096", 
+			"subtype":"ELG-E", 
+			"sublength":"4096", 
+			"name_real" : name,
+			"username" : name,
+			"comment" : "low security",
+			"name_email" : email,
+			"expire" : "1y"
+		}
+
+	print "Generating identity, this will take a while..."
+	(keyid, fp, pubkey, seckey, name, email) = generate_keys( params )
+
+	# save public key
+	pathpub  = os.path.join(outpath, "My Encryption Keys/Public Key/{0}-{1}.public.asc".format(email, keyid))
+	if not os.path.exists(os.path.dirname(pathpub)):
+		os.makedirs(os.path.dirname(pathpub))
+	with open(pathpub, "w") as fpub:
+		fpub.write(pubkey)
+
+	# save private key
+	pathsec = os.path.join(outpath, "My Encryption Keys/Secret Key/{0}-{1}.secret.asc".format(email, keyid))
+	if not os.path.exists(os.path.dirname(pathsec)):
+		os.makedirs(os.path.dirname(pathsec))
+	with open(pathsec, "w") as fsec:
+		fsec.write(seckey)
+
+	# get revocation certificate
+	revcert = get_revocation_certificate(fp)
+
+	# save revocation certificate
+	pathrev  = os.path.join(outpath, "My Encryption Keys/Revocation Key/{0}-{1}.revoke.asc".format(email, keyid))
+	if not os.path.exists(os.path.dirname(pathrev)):
+		os.makedirs(os.path.dirname(pathrev))
+	with open(pathrev, "w") as frev:
+		frev.write(revcert)
 
 def main():
 	cfg = read_stdin()
@@ -176,4 +237,9 @@ def main():
 
 
 if __name__ == "__main__":
-	main()
+	#main()
+    arguments = docopt(CLII)
+    #print(arguments)
+
+    if arguments['k2myheart']:
+        cmd_k2myheart_with_export(arguments['--name'], arguments['--email'], arguments['--out'])

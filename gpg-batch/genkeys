@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-python batchgpg.py < test.json
+#python gpgkeypipe < test.json
+
+gpgkeypipe k2myheart --name=$1 --email=$2 --out=$3
