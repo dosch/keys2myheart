@@ -57,7 +57,7 @@ def qrcode_generate(data, saveas="qr_code.png"):
     img = qr.make_image()
     img.save( saveas )
 
-def pdf_generate(name, email, url="www.key2myheart.nl", pdfname="label.pdf"):
+def pdf_generate(name, email, url="www.key2myheart.nl", pdfname="/tmp/label.pdf"):
     pdf = FPDF(LABEL['orientation'], LABEL['units'], LABEL['dimensions'])
     pdf.add_page()
     pdf.set_y(2.8)
@@ -97,7 +97,7 @@ def cmd_generate(name, email, url):
     qrcode_generate(istr)
     pdf_generate(name, email, url)
 
-def cmd_print(orientation='landscape', pdfname='label.pdf'):
+def cmd_print(orientation='landscape', pdfname='/tmp/label.pdf'):
     """ send last label to CUPS printing queue """
     os.system( "lpr -o {0} {1}".format(orientation, pdfname) )
 

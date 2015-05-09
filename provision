@@ -6,7 +6,7 @@ if [ "$(id -u)" != "0" ]; then
 	exit 1
 fi
 
-PACKAGES="coreutils gnupg2 printer-driver-dymo"
+PACKAGES="coreutils gnupg2 printer-driver-dymo python-pysqlite2 sqlite3"
 # install apt get packages
 for dep in $PACKAGES
 do
@@ -15,7 +15,7 @@ do
 done
 
 
-PYLIBS="fpdf gnupg qrcode docopt pexpect"
+PYLIBS="fpdf gnupg qrcode docopt pexpect sqlite3"
 # install python dependency
 for dep in $PYLIBS
 do
@@ -27,6 +27,12 @@ done
 # #########################################
 # disable auto opening nautilus
 gsettings set org.gnome.desktop.media-handling automount-open false
+
+
+echo "\033[34;47m>>> creating data directories\033[0m"
+mkdir /usr/local/share/key2myheart
+chown -R root:staff /usr/local/share/key2myheart
+chmod uga+rwx /usr/local/share/key2myheart
 
 echo "TODO LIST:"
 echo "1. The DYMO driver is now installed, remember to add the DYMO printer to CUPS as default."

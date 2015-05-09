@@ -10,6 +10,6 @@ fi
 echo "We will install the USB auto shizzle moving parts..."
 install -v -C --owner=root --mode=u+rw 90-k2h-usb.rules /etc/udev/rules.d/90-k2h-usb.rules
 install -v -C --owner=root --mode=u+rwx ctlk2husb /usr/local/bin/ctlk2husb
-install -v -C --owner=root --mode=u+rwx k2hcopybookshelf /usr/local/bin/k2hcopybookshelf
+install -v -C --owner=root --mode=uga+rwx k2hcopybookshelf /usr/local/bin/k2hcopybookshelf
 sudo udevadm control --reload-rules
 
