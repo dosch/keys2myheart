@@ -1,37 +1,62 @@
 <!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Key2MyHeart is an installation by Luis Fernandez and Douwe Schmidt where you can use your heartbeat to generate a key to send and receive encrypted mail. ">
+    <meta name="author" content="Key2MyHeart">
 
-<html>
-	<head>
-		<title>Mac Manual to PGP</title>
-	</head>
-	<body>
-		
-		<h1>Mac Manual for PGP</h1>
+    <title>Mac Manual</title>
 
-<p>Stuff you'll need to complete this manual: 
-	<ul>
-		<li><a href="https://gpgtools.org/" target="_blank" rel="noreferrer">GPG Suite</a></li>
-		<li>  Apple Mail</li> 
-		<li>An internet connection</li> 
-		<li>a computer running Mac OS X</li>
-		<li> an email account and your Key2myHeart USB bracelet.</li>
-	</ul>
-	</p>
+    <link href="./assets/navbar.css" rel="stylesheet">
+    <link href="./assets/bootstrap.css" rel="stylesheet">
 
-<p><em>Time required: 30-60 minutes</em></p>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
 
+  <body style="">
 
-<h2>Why are we doing this again?!</h2>
-<p>PGP is a way to protect your email communications from being read by anyone except their intended recipients. It can protect against companies, governments, or criminals spying on your Internet connection, and, to a lesser extent, it can save your email from being read if the computer on which they are stored is stolen or broken into. </p>
+    <div class="container">
 
-<p>It can also be used to prove that an email came from a particular person, instead of being a fake message sent by another sender (it is otherwise very easy for email to be fabricated). Both of these are important defenses if you're being targeted for surveillance or misinformation.</p>
+      <!-- Static navbar -->
+      <div class="navbar navbar-default">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="http://key2myheart.nl">key2myheart.nl</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="about.html">About</a></li>
+            <li><a href="pgp_for_mac.html">Mac</a></li>
+            <li><a href="pgp_for_windows.html">Windows</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
 
-<p>That is why you are reading this :-)</p>
+      <!-- Big blob -->
+      <div class="jumbotron">
+        <h1>Mac Manual</h1>
+        <p>Stuff you'll need to complete this manual: 
+			<ul>
+				<li><a href="https://gpgtools.org/" target="_blank" rel="noreferrer">GPG Suite</a></li>
+				<li>  Apple Mail</li> 
+				<li>An internet connection</li> 
+				<li>a computer running Mac OS X</li>
+				<li> an email account</li>
+				<li> Key2myHeart USB bracelet.</li>
+			</ul>
+		</p>
+		<p><em>Time required: 30-60 minutes</em></p>
+    
+      </div>
 
-<h2>Ok, cool. How do I start?</h2>
-<p>To use PGP, you will need to install some extra software that will work with your current email program. You can then use the private key generated at the Key2MyHeart installation. This private key is what you will use to decrypt emails sent to you, and to digitally sign emails that you send to show they truly came from you. Finally, you'll learn how to distribute your public key—a small chunk of information that others will need to know before they can send you encrypted mail, and that they can use to verify emails you send.</p>
-
-<p>This guide will show you how to use PGP with an Apple Mac (but not iPad or iPhone), with either the Mac's built-in Mail program, or with Mozilla Thunderbird, a popular alternative email program.</p>
+<!-- Big blob -->
+      <div class="jumbotron">
+        <h2>Follow these steps:</h2>
+    
+		<p>This guide will show you how to use PGP with an Apple Mac (but not iPad or iPhone), with either the Mac's built-in Mail program, or with Mozilla Thunderbird, a popular alternative email program.</p>
 
 <p>You can't currently use PGP directly with a web email service like Gmail, Hotmail, Yahoo! Mail, or Outlook Live. You can still use your webmail address; you’ll just have to configure it with the Mail or Thunderbird programs on your computer.</p>
 
@@ -125,10 +150,23 @@ you send, but that is not always possible. Remember that you can only send encry
 </ul>
 <p><img alt="" src="files/thunderbird8.png" /></p>
 
-<p>2015-06-21</p>
+<p><em>Last update: 2015-06-21</em></p>
+<p><em>Text copied and adopted from <a href="https://ssd.eff.org">Surveillance Self Defense</a> by the <a href="https://eff.org">Electronic Frontier Foundation</a></em></p> 
+
+    
+        </div>
 
 
-		
-	</body>
-</html>
-</p>
+
+    </div> <!-- /container -->
+      
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./assets/jquery.js"></script>
+    <script src="./assets/bootstrap.min.js"></script>
+  
+
+</body></html>
