@@ -59,25 +59,25 @@ DB = "/usr/local/share/key2myheart/keystore.db"
 gpg = gnupg.GPG(homedir=KEYRING_DIR)
 
 def default_spec():
-	return KEYSPEC.format(type='RSA', 
-							length=4096, 
-							subtype='ELG-E', 
-							sublength=4096, 
-							name='Kermit van Frog', 
-							comment='', 
-							email='kermit@invalid.tld', 
-							expire='0', 
-							pubring='foo.pub', 
+	return KEYSPEC.format(type='RSA',
+							length=4096,
+							subtype='ELG-E',
+							sublength=4096,
+							name='Kermit van Frog',
+							comment='',
+							email='kermit@invalid.tld',
+							expire='0',
+							pubring='foo.pub',
 							secring='foo.sec')
 
 def generate_spec(params):
-	return KEYSPEC.format(type=params["type"], 
-							length=2048, 
-							subtype=params["subtype"], 
-							sublength=params["sublength"], 
-							name=params["name_real"], 
-							comment=params["comment"], 
-							email=params["name_email"], 
+	return KEYSPEC.format(type=params["type"],
+							length=2048,
+							subtype=params["subtype"],
+							sublength=params["sublength"],
+							name=params["name_real"],
+							comment=params["comment"],
+							email=params["name_email"],
 							expire=params["expire"])
 
 def read_stdin():
@@ -127,10 +127,10 @@ def generate_keys(cfgarr):
 	print "keyid: ", keyid
 
 	# insert public key details in keystore
-	with sqlite3.connect(DB) as dbcon:
-		cur = dbcon.cursor()
-		cur.execute("INSERT INTO keystore(keyid, fingerprint, name, email, pubkey) VALUES(?, ?, ?, ?, ?)", (keyid, retkey.fingerprint, cfgarr["name_real"], cfgarr["name_email"], pubkey))
-		dbcon.commit()
+	# with sqlite3.connect(DB) as dbcon:
+	# 	cur = dbcon.cursor()
+	# 	cur.execute("INSERT INTO keystore(keyid, fingerprint, name, email, pubkey) VALUES(?, ?, ?, ?, ?)", (keyid, retkey.fingerprint, cfgarr["name_real"], cfgarr["name_email"], pubkey))
+	# 	dbcon.commit()
 
 	print "exported pubkey: ", pubkey
 
@@ -184,10 +184,10 @@ def get_last_keyid():
 
 def cmd_k2myheart_with_export(name, email, outpath):
 	params = {
-			"type":"RSA", 
-			"length":"4096", 
-			"subtype":"ELG-E", 
-			"sublength":"4096", 
+			"type":"RSA",
+			"length":"4096",
+			"subtype":"ELG-E",
+			"sublength":"4096",
 			"name_real" : name,
 			"username" : name,
 			"comment" : "low security",

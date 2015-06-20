@@ -7,12 +7,11 @@
 
 
 echo "Generating cryptographic keys..."
-echo "gpgkeypipe k2myheart --name=\"$1\"" --email=\"$2\" --out=/media/$USER/USB\ DISK"
-gpgkeypipe k2myheart --name="$1" --email="$2" --out="/media/$USER/USB\ DISK"&
+echo "gpgkeypipe k2myheart --name=\"$1\" --email=\"$2\" --out=/media/$USER/USB DISK"
+gpgkeypipe k2myheart --name="$1" --email="$2" --out="/media/$USER/USB DISK"
 
 echo "Generating PDF..."
 k2h generate --name="$NAME" --email="$EMAIL" < /tmp/revcert.asc
 
 echo "Printing identity label..."
 k2h print --orientation=landscape --pdf=/tmp/label.pdf
-

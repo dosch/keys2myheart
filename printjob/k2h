@@ -44,7 +44,7 @@ LABEL = {
 }
 
 # for docu see: https://code.google.com/p/pyfpdf/wiki/FPDF
-def qrcode_generate(data, saveas="qr_code.png"):
+def qrcode_generate(data, saveas="/tmp/qr_code.png"):
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -64,7 +64,7 @@ def pdf_generate(name, email, url="www.key2myheart.nl", pdfname="/tmp/label.pdf"
     #pdf.set_xy(40, 4)
 
     # place QR code
-    pdf.image('qr_code.png', 4, 1, 52)
+    pdf.image('/tmp/qr_code.png', 4, 1, 52)
 
     x_pos = 88
     # arial bold, 12
