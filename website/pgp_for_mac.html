@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Mac Manual to PGP</title>
+	</head>
+	<body>
+		
+		<h1>Mac Manual for PGP</h1>
+
+<p>Stuff needed: <a href="https://gpgtools.org/" target="_blank" rel="noreferrer">GPG Suite</a>;  Apple Mail, An internet connection, a computer running Mac OS X, an email account and your Key2myHeart USB bracelet.</p>
+
+<p>Time required: 30-60 minutes</p>
+
+<p>PGP is a way to protect your email communications from being read by anyone except their intended recipients. It can protect against companies, governments, or criminals spying on your Internet connection, and, to a lesser extent, it can save your email from being read if the computer on which they are stored is stolen or broken into.</p>
+
+<p>It can also be used to prove that an email came from a particular person, instead of being a fake message sent by another sender (it is otherwise very easy for email to be fabricated). Both of these are important defenses if you're being targeted for surveillance or misinformation.</p>
+
+<p>To use PGP, you will need to install some extra software that will work with your current email program. You can then use the private key generated at the Key2MyHeart installation. This private key is what you will use to decrypt emails sent to you, and to digitally sign emails that you send to show they truly came from you. Finally, you'll learn how to distribute your public key—a small chunk of information that others will need to know before they can send you encrypted mail, and that they can use to verify emails you send.</p>
+
+<p>This guide will show you how to use PGP with an Apple Mac (but not iPad or iPhone), with either the Mac's built-in Mail program, or with Mozilla Thunderbird, a popular alternative email program.</p>
+
+<p>You can't currently use PGP directly with a web email service like Gmail, Hotmail, Yahoo! Mail, or Outlook Live. You can still use your webmail address; you’ll just have to configure it with the Mail or Thunderbird programs on your computer.</p>
+
+<p class="warning">Note that both ends of the email conversation need to be using PGP-compatible software for it to work.</p>
+
+<p>People will normally use this only on their own personal devices, not on shared devices. Fortunately, PGP is available for most desktop computers and mobile devices, and you can point them to these guides to help them set up their own version. This guide is for Mac users.</p>
+
+<h2>Installing GPGTools on your Mac</h2>
+<p>PGP is an open standard, which means that more than one piece of software can use it. The software we're going to use for PGP is called the GPG Suite, from GPG Tools, because it works on Macs, is free for anyone to use, and it's open source: the underlying source code is available for anyone to check for bugs and backdoors.</p>
+
+<p>Once the GPG Suite is installed, you can set up your keys for the first time, and then enable PGP on Apple Mail and, optionally, Thunderbird.</p>
+
+<h3>Step 1: Install the program</h3>
+<p>First, go to <a href="https://www.gpgtools.org/" rel="noreferrer">https://www.gpgtools.org/</a> in your browser and choose "Download GPG Suite". </p>
+
+<p><img src="./files/gpgsuite.png"></p>
+
+<p>You'll end up with a disk image that you can click on to install the software. If you're not accustomed to installing third-party software on your computer, ask a nearby Mac expert – this is a step most techies can help you with, even if they don't know PGP or encryption
+
+<p>Clicking on install will give you a list of tools that will be added to your computer.</p>
+
+<p><strong><em>What exactly am I installing here?</em></strong></p>
+<p>These are tools will mostly work behind the scenes so that more than one program on your Mac can use PGP. Think of them as programs that other programs can use, rather than applications that you will use directly. GPGMail lets Apple Mail send and read PGP emails, GPG Keychain Access lets you keep your private and public keys in the same manner as you can save other passwords on your Mac. GPGServices optionally adds a feature to OS X to let you use PGP directly in programs other than email (for instance, in a word processor). GPGPreferences is for changing PGP settings in Apple's preferences. Finally, MacGPG2 is the basic tool that any program needs to use to do encryption or signing.</p>
+
+<p>Click "Continue" to install GPG Suite.</p>
+<p><img src="./files/gpginstallationsuccessful.png" ></p>
+<p>When the installation is complete, you need to drag the already generated key to the right place on your mac.</p>
+<p><img alt="" height="496" src="/files/2015/01/20/pgpkeychaingenerate.png" width="722" /></p>
+
+<h3>Step 2: Back up your PGP key</h3>
+<p>If you lose access to your private key, you won't be able to decrypt any incoming PGP mail, or your old mail. On the other hand, you want to keep your private key as securely as you can.</p>
+<p>You might want to save a backup copy to a USB key, which you keep safely hidden. You will only need it if you lose your original key, but for safety you will want to keep it out of the hands of your potential attackers.</p>
+<p><strong><em>Is everything lost if my attackers get hold of my PGP private key?</em></strong></p>
+<p>What if you get your Mac stolen, or your backup key is taken from you? Does that mean your PGP messages are vulnerable? No: if you've chosen a good passphrase and nobody has been able to learn what it is, you should still be mostly protected. To be safe, you may want to revoke your old key, and create a new PGP key. This won’t stop your old key from being able to decrypt your old email, but it will discourage other people from using the old key for their new emails to you.</p>
+<p>To backup your key, open GPG Keychain Access. Select your key, and click “Export” in the toolbar. Put your USB drive into the machine, and choose it in the “Where” part of the “Save As...” dialog. Check the “Allow secret key export” checkbox.</p>
+
+<h2>Configuring Apple Mail</h2>
+
+<h3>Mail Account Setup Auto-detect</h3>
+<p>When you're composing a new message, there are two icons just beneath the Subject field. There's a padlock (encrypt email) and a star (digitally sign email). If the padlock is closed it means this email will be encrypted, and if the star has a check in it, it means this email will be digitally signed.</p>
+<h2>Sending PGP Signed or Encrypted Email</h2>
+
+<p>You can always sign your email, even if the recipient doesn’t use PGP. Because digitally signing emails requires your secret key, Mail will pop up a window asking for your passphrase when you first sign an email.</p>
+<p>You can only encrypt emails if the person you’re emailing uses PGP and you have that person’s public key. If the encryption padlock icon is unlocked and greyed out so you can't click on it, this means you first need to import the recipient's public key. Either ask them to send it to you, or use the GPG Keychain Access app to find the key to from a public keyserver.</p>
+
+<h2>Using PGP with Mozilla Thunderbird</h2>
+<p>This walkthrough shows how to use GPG with the free, open source, Thunderbird mail client from Mozilla, together with the Enigmail plugin for email encryption.</p>
+<p>First, download <a href="https://www.mozilla.org/thunderbird/" rel="noreferrer">Thunderbird</a> from the web, or copy it from the USB bracelet. Mount the disk image as you did with GPG Tools, and drag the Thunderbird into Applications. When you open it for the first time it will ask if you want to set it as your default email client. Go ahead and click "Set as Default.”</p>
+<p><img alt="" src="/files/field/image/thunderbird1.png" /></p>
+<p>Then you will see the first run wizard. To set up your existing email address, click "Skip this and use my existing email." Then enter your name, email address, and the password to your email account.</p>
+<p><img alt="" src="/files/field/image/thunderbird2.png" /></p>
+<p>If you use popular free email services like Gmail, Thunderbird should be able to automatically detect your email settings when you click Continue. If it doesn't, you may need to manually configure your IMAP and SMTP settings—ask your ISP, or a technical friend who knows about setting up email, to help. Sometimes, Thunderbird can just guess the correct settings.</p>
+<p class="warning" wrap="">If you use <a href="/en/glossary/two-factor-authentication" class="glossify-link" data-title="two-factor authentication" title="&quot;Something you know, and something you have.&quot; Login systems that require only a username and password risk being broken when someone else can obtain (or guess) those pieces of information. Services that offer two-factor authentication also require you to provide a separate confirmation that you are who you say you are. The second factor could be a one-off secret code, a number generated by a program running on a mobile device, or a device that you carry and that you can use to confirm who you are. Companies like banks, and major internet services like Google, Paypal and Twitter now offer two-factor authentication. " data-placement="top" data-trigger="hover" data-html="true" data-toggle="popover" data-container="body" data-content="&quot;Something you know, and something you have.&quot; Login systems that require only a username and password risk being broken when someone else can obtain (or guess) those pieces of information. Services that offer two-factor authentication also require you to provide a separate confirmation that you are who you say you are. The second factor could be a one-off secret code, a number generated by a program running on a mobile device, or a device that you carry and that you can use to confirm who you are. Companies like banks, and major internet services like Google, Paypal and Twitter now offer two-factor authentication. ">two-factor authentication<img src="https://ssd.eff.org/sites/all/themes/ssd/img/info.png" /></a> with Google (and depending on your threat model you probably should!) you cannot use your standard Gmail password with Thunderbird. Instead, you will need to create a new application-specific password for Thunderbird to access your Gmail account. See <a href="https://support.google.com/mail/answer/1173270?hl=en" target="_blank" rel="noreferrer">Google's own guide</a> for doing this. </p>
+<p><img alt="" src="/files/field/image/thunderbird3.png" /></p>
+<p>After you're done configuring Thunderbird to check your email, click "Done." Then click on "Inbox" in the top left to load your emails.</p>
+<p>Now that you've installed and configured Thunderbird to work with your email, you need to install <a href="https://www.enigmail.net/home/index.php" target="_blank" rel="noreferrer">Enigmail</a>, the GPG add-on for Thunderbird. In Thunderbird, click the menu icon in the top-right, and choose Add-ons.</p>
+<p><img alt="" src="/files/field/image/thunderbird4.png" /></p>
+<p>Search for "enigmail" in the search box in the top right.</p>
+<p><img alt="" src="/files/field/image/thunderbird5.png" /></p>
+<p>Click the Install button next to the Enigmail extension to download and install Enigmail. When it's done, click "Restart Now" to restart Thunderbird.</p>
+<p>The first time you run Thunderbird with Enigmail enabled it opens the OpenPGP Setup Wizard. Click "Cancel." We will manually configure Enigmail instead.</p>
+<p>Click the menu button, hover over Preferences, and choose Account Settings.</p>
+<p><img alt="" src="/files/field/image/thunderbird6.png" /></p>
+<p>Go to the OpenPGP Security tab. Make sure "Enable OpenPGP support (Enigmail) for this identity" is checked. "Use specific OpenPGP key ID" should be selected, and if your key isn't already selected you can click "Select Key" to select it.</p>
+<p>You should also check "Sign non-encrypted message by default," "Sign encrypted messages by default," and "Use PGP/MIME by default," but not (for most people) "Encrypt messages by default."</p>
+<p>If most of the people that you email use PGP (or you would like to encourage them to do so), you may wish to encrypt by default. It would be ideal to encrypt all the emails you send, but that is not always possible. Remember that you can only send encrypted email to other people who use PGP, and you need to have their public keys in your keychain. For most people, manually choosing to encrypt each email you send will probably work best.</p>
+<p><img alt="" src="/files/field/image/thunderbird7.png" /></p>
+<p>Then click "OK" to save all of the settings.</p>
+<p>Congratulations, you now have Thunderbird and Enigmail set up! Here are a couple of quick pointers:</p>
+<ul><li>You can click the menu button, hover over OpenPGP, and open Key Management to see the PGP key manager that's build-in to Enigmail. It's very similar to GPG Keychain Access, and it's your choice which you use.</li>
+<li>When you're composing a new message, there are two icons in the bottom right corner of the window: a pen (digitally sign email) and a key (encrypt email). If the icons are gold it means they are selected, and if they're silver it means they're not selected. Click on them to toggle signing and encrypting the email you're writing.</li>
+</ul><p><img alt="" src="/files/field/image/thunderbird8.png" /></p>
+</div></div></div><div class="field field-name-field-updated field-type-datestamp field-label-inline clearfix container"><div class="field-label">Last updated:&nbsp;</div><div class="field-items"><div class="field-item even"><span class="date-display-single">2015-05-27</span></div></div></div>    </div>
+  </div>
+
+		
+	</body>
+</html>
