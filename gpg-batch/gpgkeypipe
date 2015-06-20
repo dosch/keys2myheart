@@ -117,10 +117,12 @@ def generate_keys(cfgarr):
 	begin = time.time()
 	retkey = gpg.gen_key(spec)
 	end = time.time()
+	if not retkey.primary_created:
+		print("(!!!) FAILED TO GENERATE KEY, MOST LIKELY A PERMISSIONS PROBLEM!")
 	from pprint import pprint
 	pprint(retkey)
 	print "generated key with fp: ", retkey.fingerprint, "and keyid", "in", (end-begin), "seconds"
-
+	#pprint(vars(retkey))
 	pubkey = gpg.export_keys(retkey.fingerprint)
 	seckey = gpg.export_keys(retkey.fingerprint, secret=True)
 	keyid  = "0x{0}".format( retkey.fingerprint[-8:] )

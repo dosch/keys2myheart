@@ -2,16 +2,19 @@
 
 #python gpgkeypipe < test.json
 
-# NAME=$1
-# EMAIL=$2
+NAME=$1
+EMAIL=$2
 
+USRDIR=raven #$USER
 
 echo "Generating cryptographic keys..."
-echo "gpgkeypipe k2myheart --name=\"$1\" --email=\"$2\" --out=/media/$USER/USB DISK"
-gpgkeypipe k2myheart --name="$1" --email="$2" --out="/media/$USER/USB DISK"
+echo "gpgkeypipe k2myheart --name="$1" --email="$2" --out=/media/$USRDIR/USB DISK"
+gpgkeypipe k2myheart --name="$1" --email="$2" --out="/media/$USRDIR/USB DISK"
 
 echo "Generating PDF..."
 k2h generate --name="$NAME" --email="$EMAIL" < /tmp/revcert.asc
 
 echo "Printing identity label..."
-k2h print --orientation=landscape --pdf=/tmp/label.pdf
+#k2h print --orientation=landscape --pdf=/tmp/label.pdf
+
+oscsend osc.udp://localhost:12345 /k2h/done

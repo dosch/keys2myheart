@@ -8,7 +8,7 @@
 import gnupg
 from pprint import pprint
 
-KEYRING_DIR="~/k2h.gnupg"
+KEYRING_DIR="/tmp/k2h.gnupg"
 
 gpg = gnupg.GPG(homedir=KEYRING_DIR)
 pubkeys = gpg.list_keys()
