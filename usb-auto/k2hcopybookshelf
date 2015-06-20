@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
+USRDIR=raven #$USER
+echo "Copying books..."
 if [ -f "/usr/local/share/key2myheart/k2h-bookshelf.tar.gz" ] 
 then
-	tar xf /usr/local/share/key2myheart/k2h-bookshelf.tar.gz -C /media/$USER/USB\ DISK
+	tar xf /usr/local/share/key2myheart/k2h-bookshelf.tar.gz -C /media/$USRDIR/USB\ DISK
 fi

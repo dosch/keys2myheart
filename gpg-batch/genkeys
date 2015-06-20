@@ -2,8 +2,8 @@
 
 #python gpgkeypipe < test.json
 
-NAME="Betta"
-EMAIL="email@invalid.tld"
+NAME=$1
+EMAIL=$2
 
 
 echo "Copying books..."
