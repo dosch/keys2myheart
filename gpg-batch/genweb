@@ -1,0 +1,17 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+##
+## (cc) 2015 Luis Rodil-Fernandez <root@derfunke.net>
+## Generate labels from revocation certificates and manage printing queue
+##
+##
+import gnupg
+from pprint import pprint
+
+KEYRING_DIR="~/k2h.gnupg"
+
+gpg = gnupg.GPG(homedir=KEYRING_DIR)
+pubkeys = gpg.list_keys()
+
+for pk in pubkeys:
+	pprint(pk)

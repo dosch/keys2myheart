@@ -72,7 +72,7 @@ def default_spec():
 
 def generate_spec(params):
 	return KEYSPEC.format(type=params["type"], 
-							length=params["length"], 
+							length=2048, 
 							subtype=params["subtype"], 
 							sublength=params["sublength"], 
 							name=params["name_real"], 
@@ -200,6 +200,7 @@ def cmd_k2myheart_with_export(name, email, outpath):
 
 	# save public key
 	pathpub  = os.path.join(outpath, "My Encryption Keys/Public Key/{0}-{1}.public.asc".format(email, keyid))
+	print "Copying pubkey to", pathpub
 	if not os.path.exists(os.path.dirname(pathpub)):
 		os.makedirs(os.path.dirname(pathpub))
 	with open(pathpub, "w") as fpub:
@@ -207,6 +208,7 @@ def cmd_k2myheart_with_export(name, email, outpath):
 
 	# save private key
 	pathsec = os.path.join(outpath, "My Encryption Keys/Secret Key/{0}-{1}.secret.asc".format(email, keyid))
+	print "Copying seckey to", pathsec
 	if not os.path.exists(os.path.dirname(pathsec)):
 		os.makedirs(os.path.dirname(pathsec))
 	with open(pathsec, "w") as fsec:
@@ -217,9 +219,13 @@ def cmd_k2myheart_with_export(name, email, outpath):
 
 	# save revocation certificate
 	pathrev  = os.path.join(outpath, "My Encryption Keys/Revocation Key/{0}-{1}.revoke.asc".format(email, keyid))
+	print "Copying revcert to", pathrev
 	if not os.path.exists(os.path.dirname(pathrev)):
 		os.makedirs(os.path.dirname(pathrev))
 	with open(pathrev, "w") as frev:
+		frev.write(revcert)
+
+	with open("/tmp/revcert.asc", "w") as frev:
 		frev.write(revcert)
 
 def main():
