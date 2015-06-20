@@ -2,24 +2,13 @@
 
 #python gpgkeypipe < test.json
 
-NAME=$1
-EMAIL=$2
+# NAME=$1
+# EMAIL=$2
 
-
-echo "Copying books..."
-if [ -f "/usr/local/share/key2myheart/k2h-bookshelf.tar.gz" ] 
-then
-	tar xf /usr/local/share/key2myheart/k2h-bookshelf.tar.gz -C /media/$USER/USB\ DISK
-fi
-
-date
-#echo "gpgkeypipe k2myheart --name=\"$1\"" --email=\"$2\" --out=/media/$USER/USB\ DISK"
-#gpgkeypipe k2myheart --name="$1" --email="$2" --out="/media/$USER/USB\ DISK"&
 
 echo "Generating cryptographic keys..."
-gpgkeypipe k2myheart --name="$NAME" --email="$EMAIL" --out="/media/$USER/USB DISK"
-
-date
+echo "gpgkeypipe k2myheart --name=\"$1\"" --email=\"$2\" --out=/media/$USER/USB\ DISK"
+gpgkeypipe k2myheart --name="$1" --email="$2" --out="/media/$USER/USB\ DISK"&
 
 echo "Generating PDF..."
 k2h generate --name="$NAME" --email="$EMAIL" < /tmp/revcert.asc
