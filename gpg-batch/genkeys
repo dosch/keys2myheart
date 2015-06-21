@@ -7,8 +7,10 @@ EMAIL=$2
 
 USRDIR=raven #$USER
 
+#su $USRDIR <<EOF
+
 echo "Generating cryptographic keys..."
-echo "gpgkeypipe k2myheart --name="$1" --email="$2" --out=/media/$USRDIR/USB DISK"
+echo "gpgkeypipe k2myheart --name=\"$1\" --email=\"$2\" --out=\"/media/$USRDIR/USB DISK\""
 gpgkeypipe k2myheart --name="$1" --email="$2" --out="/media/$USRDIR/USB DISK"
 
 echo "Generating PDF..."
@@ -18,3 +20,5 @@ echo "Printing identity label..."
 #k2h print --orientation=landscape --pdf=/tmp/label.pdf
 
 oscsend osc.udp://localhost:12345 /k2h/done
+
+#EOF
