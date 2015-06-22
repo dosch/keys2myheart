@@ -6,12 +6,53 @@
 ##
 ##
 import gnupg
+import os, sys
 from pprint import pprint
 
-KEYRING_DIR="/tmp/k2h.gnupg"
+KEYRING_DIR="~/k2h.gnupg"
+
+if not os.path.isdir("export/keys"):
+	os.makedirs("export/keys")
 
 gpg = gnupg.GPG(homedir=KEYRING_DIR)
 pubkeys = gpg.list_keys()
 
-for pk in pubkeys:
-	pprint(pk)
+EVENT = "yamiichi"
+
+PART1 = """<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+	<table id="everyone" class="keylist">
+		<th><td>event</td><td>name</td><td>keyid</td></th>"""
+PART2 = """
+	</table>
+</body>
+</html>"""
+
+def export_pubkey(kid):
+	KEY_HTML = """<!DOCTYPE html>
+<html>
+<body>
+	<div id="{0}" class="pubkey">
+	{1}
+	</div>
+</body>
+</html>"""
+
+	ascii_armored_pk = gpg.export_keys(kid)
+	with open("export/keys/{0}.html".format(kid), 'w') as f:
+		content =KEY_HTML.format(kid, ascii_armored_pk)
+		f.write(content)
+
+with open("export/index.html", 'w') as f:
+	f.write(PART1)
+	for pk in pubkeys:
+		uid = pk['uids'][0]
+		keyid = pk['keyid']
+		row = "\t\t<tr><td>{0}</td><td>{1}</td><td><a href='keys/{2}.html'>{2}</a></td></tr>".format(EVENT, uid, keyid)
+		f.write(row)
+		export_pubkey(keyid)
+
+	f.write(PART2)
