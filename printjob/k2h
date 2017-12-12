@@ -39,11 +39,12 @@ LABEL = {
     # DYMO label: landscape, 88x41mm
     'orientation' : 'L',   # P=portrait, L=landscape
     'units' : 'mm',
-    'dimensions' : (41, 88)
+    #'dimensions' : (41, 88)
+    'dimensions' : (54, 101)
 }
 
 # for docu see: https://code.google.com/p/pyfpdf/wiki/FPDF
-def qrcode_generate(data, saveas="qr_code.png"):
+def qrcode_generate(data, saveas="/tmp/qr_code.png"):
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -56,16 +57,16 @@ def qrcode_generate(data, saveas="qr_code.png"):
     img = qr.make_image()
     img.save( saveas )
 
-def pdf_generate(name, email, url="www.key2myheart.nl", pdfname="label.pdf"):
+def pdf_generate(name, email, url="www.key2myheart.nl", pdfname="/tmp/label.pdf"):
     pdf = FPDF(LABEL['orientation'], LABEL['units'], LABEL['dimensions'])
     pdf.add_page()
     pdf.set_y(2.8)
     #pdf.set_xy(40, 4)
 
     # place QR code
-    pdf.image('qr_code.png', 0, 0, 38)
+    pdf.image('/tmp/qr_code.png', 4, 1, 52)
 
-    x_pos = 76
+    x_pos = 88
     # arial bold, 12
     pdf.set_font('Arial', 'B', 9.6)
     # w, h, txt, border, line, align
@@ -96,7 +97,7 @@ def cmd_generate(name, email, url):
     qrcode_generate(istr)
     pdf_generate(name, email, url)
 
-def cmd_print(orientation='landscape', pdfname='label.pdf'):
+def cmd_print(orientation='landscape', pdfname='/tmp/label.pdf'):
     """ send last label to CUPS printing queue """
     os.system( "lpr -o {0} {1}".format(orientation, pdfname) )
 

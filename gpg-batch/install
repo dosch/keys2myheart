@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+#sqlite3 /usr/local/share/key2myheart/keystore.db < keystore.sql
+
+install -v -C --owner=root --mode=uga+rwx genkeys /usr/local/bin/genkeys
+install -v -C --owner=root --mode=uga+rwx gpgkeypipe /usr/local/bin/gpgkeypipe

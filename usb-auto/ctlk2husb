@@ -22,4 +22,3 @@ then
 	# send osc message to notify of usb drive presence
 	oscsend osc.udp://localhost:12345 /k2h/thumbdrive s add
 fi
-
